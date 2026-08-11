@@ -35,7 +35,7 @@ export function buildSongsFromGlob(globModule) {
         artist: parsed.artist,
         number: parsed.number,
         src: module.default,
-        cd: `/assets/cds/${stem}.png`,
+        cd: `/assets/cds/${parsed.number || stem}.png`,
         filename,
       };
     })
