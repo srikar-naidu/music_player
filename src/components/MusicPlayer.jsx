@@ -36,7 +36,7 @@ export default function MusicPlayer({
   const [showPlaylist, setShowPlaylist] = useState(false);
 
   const currentSong = songs[currentSongIndex];
-  const cdSrc = currentSong?.cd || '/assets/cds/song-01.png';
+  const cdSrc = currentSong?.cd || '/cds/song-01.png';
 
   const handleAddSongs = useCallback(() => {
     const input = document.createElement('input');

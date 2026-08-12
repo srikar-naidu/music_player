@@ -1,4 +1,6 @@
-const FALLBACK_CD = '/assets/cds/song-01.png';
+import { getSongMetadata } from './songMetadata';
+
+const FALLBACK_CD = '/cds/song-01.png';
 
 function parseFilename(filename) {
   const stem = filename.replace(/\.[^/.]+$/, '');
@@ -28,14 +30,18 @@ export function buildSongsFromGlob(globModule) {
       const filename = path.split('/').pop() || path;
       const parsed = parseFilename(filename);
       const stem = parsed.stem || filename.replace(/\.[^/.]+$/, '');
-      
+
+      const metadata = getSongMetadata(stem);
+      const title = metadata.title || parsed.title || stem;
+      const artist = metadata.artist || parsed.artist || 'Unknown Artist';
+
       return {
         id: stem.toLowerCase().replace(/\s+/g, '-'),
-        title: parsed.title || filename.replace(/\.[^/.]+$/, ''),
-        artist: parsed.artist,
+        title,
+        artist,
         number: parsed.number,
         src: module.default,
-        cd: `/assets/cds/${parsed.number || stem}.png`,
+        cd: `/cds/${parsed.number || stem}.png`,
         filename,
       };
     })

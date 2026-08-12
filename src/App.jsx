@@ -93,46 +93,6 @@ export default function App() {
     }
   }, [currentSongIndex, songs]);
 
-  useEffect(() => {
-    function handleKeyDown(e) {
-      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.isContentEditable) {
-        return;
-      }
-
-      switch (e.key) {
-        case ' ':
-          e.preventDefault();
-          handlePlayPause();
-          break;
-        case 'ArrowRight':
-          e.preventDefault();
-          handleNext();
-          break;
-        case 'ArrowLeft':
-          e.preventDefault();
-          handlePrev();
-          break;
-        case 'ArrowUp':
-          e.preventDefault();
-          handleVolumeChange(Math.min(1, volume + 0.05));
-          break;
-        case 'ArrowDown':
-          e.preventDefault();
-          handleVolumeChange(Math.max(0, volume - 0.05));
-          break;
-        case 'm':
-        case 'M':
-          handleToggleMute();
-          break;
-        default:
-          break;
-      }
-    }
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [volume, handlePlayPause, handleNext, handlePrev, handleVolumeChange, handleToggleMute]);
-
   const handlePlayPause = useCallback(async () => {
     try {
       if (isPlaying) {
@@ -173,22 +133,56 @@ export default function App() {
   }, []);
 
   const handleAddFiles = useCallback(async (files) => {
-    // Optional: allow adding more songs via file picker
-    // These will be played in addition to folder songs
-    // For simplicity, we just append to the current session
-    // (not persisted since they're local files)
     console.log('Additional files selected:', files.length);
-    // In a full implementation, you'd merge these with autoSongs
   }, []);
 
   const handleRemoveSong = useCallback(async (songId) => {
-    // Cannot remove folder-based songs
     console.log('Cannot remove folder-based songs');
   }, []);
 
   const handleReorder = useCallback(async (fromIndex, toIndex) => {
     await reorderSongs(fromIndex, toIndex);
   }, [reorderSongs]);
+
+  useEffect(() => {
+    function handleKeyDown(e) {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.isContentEditable) {
+        return;
+      }
+
+      switch (e.key) {
+        case ' ':
+          e.preventDefault();
+          handlePlayPause();
+          break;
+        case 'ArrowRight':
+          e.preventDefault();
+          handleNext();
+          break;
+        case 'ArrowLeft':
+          e.preventDefault();
+          handlePrev();
+          break;
+        case 'ArrowUp':
+          e.preventDefault();
+          handleVolumeChange(Math.min(1, volume + 0.05));
+          break;
+        case 'ArrowDown':
+          e.preventDefault();
+          handleVolumeChange(Math.max(0, volume - 0.05));
+          break;
+        case 'm':
+        case 'M':
+          handleToggleMute();
+          break;
+        default:
+          break;
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [volume, handlePlayPause, handleNext, handlePrev, handleVolumeChange, handleToggleMute]);
 
   const hasNext = songs.length > 1 || repeat !== 'off';
   const hasPrev = songs.length > 1;
@@ -205,14 +199,18 @@ export default function App() {
 
   return (
     <div className="relative w-full h-screen overflow-hidden">
-      <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{
-          backgroundImage: 'url(/assets/background.png)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }}
-      />
+      {hasSongs ? (
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{
+            backgroundImage: 'url(/background.png)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}
+        />
+      ) : (
+        <div className="absolute inset-0 bg-gradient-to-br from-hyderabad-brown to-hyderabad-dark" />
+      )}
 
       <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-black/10" />
 

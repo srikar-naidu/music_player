@@ -14,7 +14,7 @@ export default function EmptyState({ onAddSongs }) {
           <p className="text-hyderabad-cream/80 text-sm mb-3 font-medium">Quick Setup:</p>
           <ol className="text-hyderabad-cream/60 text-xs space-y-1.5 list-decimal list-inside">
             <li>Drop your <span className="text-hyderabad-cream">.mp3</span> files into <code className="text-hyderabad-terracotta">src/assets/music/</code></li>
-            <li>Drop matching CD art <span className="text-hyderabad-cream">.png</span> into <code className="text-hyderabad-terracotta">src/assets/cds/</code></li>
+            <li>Drop matching CD art <span className="text-hyderabad-cream">.png</span> into <code className="text-hyderabad-terracotta">public/cds/</code></li>
             <li>Name them like: <code className="text-hyderabad-terracotta">01 - Song Title - Artist.mp3</code></li>
             <li>CD art: <code className="text-hyderabad-terracotta">01 - Song Title - Artist.png</code></li>
           </ol>

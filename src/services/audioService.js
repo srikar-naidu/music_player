@@ -30,14 +30,22 @@ export class AudioService {
     });
   }
 
-  loadSong(file) {
+  loadSong(source) {
     if (this._currentObjectURL) {
       URL.revokeObjectURL(this._currentObjectURL);
+      this._currentObjectURL = null;
     }
 
-    this._currentFile = file;
-    this._currentObjectURL = URL.createObjectURL(file);
-    this.audio.src = this._currentObjectURL;
+    this._currentFile = null;
+
+    if (typeof source === 'string') {
+      this.audio.src = source;
+    } else {
+      this._currentFile = source;
+      this._currentObjectURL = URL.createObjectURL(source);
+      this.audio.src = this._currentObjectURL;
+    }
+
     this.audio.load();
   }
 
