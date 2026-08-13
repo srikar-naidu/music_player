@@ -25,8 +25,10 @@ function parseFilename(filename) {
 }
 
 export function buildSongsFromGlob(globModule) {
+  console.log('[songs] glob module keys:', Object.keys(globModule));
   const entries = Object.entries(globModule)
     .map(([path, module]) => {
+      console.log('[songs] entry:', path, module.default);
       const filename = path.split('/').pop() || path;
       const parsed = parseFilename(filename);
       const stem = parsed.stem || filename.replace(/\.[^/.]+$/, '');
@@ -52,6 +54,7 @@ export function buildSongsFromGlob(globModule) {
       return a.filename.localeCompare(b.filename);
     });
 
+  console.log('[songs] built entries:', entries.map(e => ({ title: e.title, src: e.src })));
   return entries;
 }
 

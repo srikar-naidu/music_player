@@ -32,7 +32,7 @@ export default function App() {
   const [duration, setDuration] = useState(0);
   const [volume, setVolume] = useState(1);
   const [isMuted, setIsMuted] = useState(false);
-  const prevSongIndexRef = useRef(currentSongIndex);
+  const prevSongIndexRef = useRef(-1);
 
   useEffect(() => {
     const savedVolume = localStorage.getItem('hyderabad-deluxe-volume');
