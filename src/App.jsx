@@ -36,8 +36,8 @@ export default function App() {
   const prevSongIndexRef = useRef(-1);
 
   useEffect(() => {
-    const savedVolume = localStorage.getItem('hyderabad-deluxe-volume');
-    const savedMuted = localStorage.getItem('hyderabad-deluxe-muted');
+    const savedVolume = localStorage.getItem('music-player-volume');
+    const savedMuted = localStorage.getItem('music-player-muted');
     if (savedVolume) {
       const vol = parseFloat(savedVolume);
       setVolume(vol);
@@ -124,13 +124,13 @@ export default function App() {
   const handleVolumeChange = useCallback((newVolume) => {
     audioService.setVolume(newVolume);
     setVolume(newVolume);
-    localStorage.setItem('hyderabad-deluxe-volume', newVolume.toString());
+    localStorage.setItem('music-player-volume', newVolume.toString());
   }, []);
 
   const handleToggleMute = useCallback(() => {
     const muted = audioService.toggleMute();
     setIsMuted(muted);
-    localStorage.setItem('hyderabad-deluxe-muted', muted.toString());
+    localStorage.setItem('music-player-muted', muted.toString());
   }, []);
 
   const handleAddFiles = useCallback(async (files) => {
@@ -206,16 +206,27 @@ export default function App() {
   return (
     <div className="relative w-full h-screen overflow-hidden">
       {hasSongs ? (
-        <video
-          className="absolute inset-0 w-full h-full object-contain"
-          autoPlay
-          loop
-          muted
-          playsInline
-          onLoadedMetadata={(e) => { e.target.playbackRate = 0.7; }}
-        >
-          <source src="/background.mp4" type="video/mp4" />
-        </video>
+        <>
+          <video
+            className="absolute inset-0 w-full h-full object-cover blur-2xl scale-110 opacity-50"
+            autoPlay
+            loop
+            muted
+            playsInline
+          >
+            <source src="/background.mp4" type="video/mp4" />
+          </video>
+          <video
+            className="absolute inset-0 w-full h-full object-contain"
+            autoPlay
+            loop
+            muted
+            playsInline
+            onLoadedMetadata={(e) => { e.target.playbackRate = 0.7; }}
+          >
+            <source src="/background.mp4" type="video/mp4" />
+          </video>
+        </>
       ) : (
         <div className="absolute inset-0 bg-gradient-to-br from-hyderabad-brown to-hyderabad-dark" />
       )}

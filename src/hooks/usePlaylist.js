@@ -10,6 +10,19 @@ export function usePlaylist(songs) {
   const [shuffleIndex, setShuffleIndex] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
 
+  const generateShuffleOrder = useCallback((excludeIndex) => {
+    let indices = Array.from({ length: playlist.length }, (_, i) => i);
+    if (typeof excludeIndex === 'number' && indices.includes(excludeIndex)) {
+      indices = indices.filter(i => i !== excludeIndex);
+    }
+    for (let i = indices.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [indices[i], indices[j]] = [indices[j], indices[i]];
+    }
+    setShuffleOrder(indices);
+    setShuffleIndex(0);
+  }, [playlist.length]);
+
   useEffect(() => {
     setPlaylist(songs || []);
   }, [songs]);
@@ -38,23 +51,13 @@ export function usePlaylist(songs) {
   useEffect(() => {
     saveSettings('shuffle', shuffle);
     if (shuffle && playlist.length > 0) {
-      generateShuffleOrder();
+      generateShuffleOrder(currentSongIndex);
     }
-  }, [shuffle, playlist.length]);
+  }, [shuffle, playlist.length, generateShuffleOrder, currentSongIndex]);
 
   useEffect(() => {
     saveSettings('repeat', repeat);
   }, [repeat]);
-
-  const generateShuffleOrder = useCallback(() => {
-    const indices = Array.from({ length: playlist.length }, (_, i) => i);
-    for (let i = indices.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [indices[i], indices[j]] = [indices[j], indices[i]];
-    }
-    setShuffleOrder(indices);
-    setShuffleIndex(0);
-  }, [playlist.length]);
 
   const getNextIndex = useCallback(() => {
     if (playlist.length === 0) return 0;
@@ -65,7 +68,10 @@ export function usePlaylist(songs) {
 
     if (shuffle) {
       if (shuffleOrder.length === 0) {
-        generateShuffleOrder();
+        generateShuffleOrder(currentSongIndex);
+      }
+      if (shuffleOrder.length === 0) {
+        return currentSongIndex;
       }
       const nextShuffleIndex = (shuffleIndex + 1) % shuffleOrder.length;
       setShuffleIndex(nextShuffleIndex);
@@ -84,7 +90,10 @@ export function usePlaylist(songs) {
 
     if (shuffle) {
       if (shuffleOrder.length === 0) {
-        generateShuffleOrder();
+        generateShuffleOrder(currentSongIndex);
+      }
+      if (shuffleOrder.length === 0) {
+        return currentSongIndex;
       }
       const prevShuffleIndex = (shuffleIndex - 1 + shuffleOrder.length) % shuffleOrder.length;
       setShuffleIndex(prevShuffleIndex);
@@ -121,8 +130,6 @@ export function usePlaylist(songs) {
   }, []);
 
   const reorderSongs = useCallback(async (fromIndex, toIndex) => {
-    // For folder-based songs, reordering is just UI state
-    // We don't persist reorder since files are static in the folder
     setCurrentSongIndex(prev => {
       if (prev === fromIndex) return toIndex;
       if (fromIndex < prev && toIndex >= prev) return prev - 1;

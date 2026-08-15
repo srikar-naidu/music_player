@@ -17,4 +17,4 @@ if (SUPABASE_URL && SUPABASE_ANON_KEY) {
 
 export { supabase, presenceAvailable };
 
-export const PRESENCE_CHANNEL = 'hyderabad-deluxe-presence';
+export const PRESENCE_CHANNEL = 'music-player-presence';

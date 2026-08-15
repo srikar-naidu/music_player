@@ -5,7 +5,7 @@ export default function EmptyState({ onAddSongs }) {
     <div className="fixed inset-0 flex items-center justify-center z-10 pointer-events-none">
       <div className="text-center pointer-events-auto px-6">
         <h1 className="font-display text-4xl md:text-5xl text-hyderabad-cream mb-3 tracking-wide drop-shadow-lg">
-          HYDERABAD DELUXE
+          MUSIC PLAYER
         </h1>
         <p className="font-body text-hyderabad-warm text-sm md:text-base mb-8 tracking-widest uppercase opacity-80">
           Your daily ride. Your daily soundtrack.

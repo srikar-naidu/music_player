@@ -1,4 +1,4 @@
-const DB_NAME = 'hyderabad-deluxe';
+const DB_NAME = 'music-player';
 const DB_VERSION = 1;
 const STORE_NAME = 'playlist';
 
@@ -80,7 +80,7 @@ export async function clearPlaylistDB() {
 
 export async function saveSettings(key, value) {
   try {
-    localStorage.setItem(`hyderabad-deluxe-${key}`, JSON.stringify(value));
+    localStorage.setItem(`music-player-${key}`, JSON.stringify(value));
   } catch (error) {
     console.error('Failed to save setting:', error);
   }
@@ -88,7 +88,7 @@ export async function saveSettings(key, value) {
 
 export async function loadSettings(key, defaultValue = null) {
   try {
-    const item = localStorage.getItem(`hyderabad-deluxe-${key}`);
+    const item = localStorage.getItem(`music-player-${key}`);
     return item ? JSON.parse(item) : defaultValue;
   } catch (error) {
     console.error('Failed to load setting:', error);
