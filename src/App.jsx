@@ -200,14 +200,15 @@ export default function App() {
   return (
     <div className="relative w-full h-screen overflow-hidden">
       {hasSongs ? (
-        <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{
-            backgroundImage: 'url(/background.png)',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-          }}
-        />
+        <video
+          className="absolute inset-0 w-full h-full object-cover"
+          autoPlay
+          loop
+          muted
+          playsInline
+        >
+          <source src="/background.mp4" type="video/mp4" />
+        </video>
       ) : (
         <div className="absolute inset-0 bg-gradient-to-br from-hyderabad-brown to-hyderabad-dark" />
       )}
