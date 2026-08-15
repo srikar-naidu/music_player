@@ -32,6 +32,7 @@ export default function App() {
   const [duration, setDuration] = useState(0);
   const [volume, setVolume] = useState(1);
   const [isMuted, setIsMuted] = useState(false);
+  const [now, setNow] = useState(new Date());
   const prevSongIndexRef = useRef(-1);
 
   useEffect(() => {
@@ -184,6 +185,11 @@ export default function App() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [volume, handlePlayPause, handleNext, handlePrev, handleVolumeChange, handleToggleMute]);
 
+  useEffect(() => {
+    const timer = setInterval(() => setNow(new Date()), 1000);
+    return () => clearInterval(timer);
+  }, []);
+
   const hasNext = songs.length > 1 || repeat !== 'off';
   const hasPrev = songs.length > 1;
 
@@ -201,11 +207,12 @@ export default function App() {
     <div className="relative w-full h-screen overflow-hidden">
       {hasSongs ? (
         <video
-          className="absolute inset-0 w-full h-full object-cover"
+          className="absolute inset-0 w-full h-full object-contain"
           autoPlay
           loop
           muted
           playsInline
+          onLoadedMetadata={(e) => { e.target.playbackRate = 0.7; }}
         >
           <source src="/background.mp4" type="video/mp4" />
         </video>
@@ -214,6 +221,10 @@ export default function App() {
       )}
 
       <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-black/10" />
+
+      <div className="absolute top-3 left-3 text-xs text-white/70 font-medium z-10">
+        {now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+      </div>
 
       <OnlineUsers count={onlineCount} status={status} />
 

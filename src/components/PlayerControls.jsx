@@ -32,58 +32,58 @@ export default function PlayerControls({
     <div className="flex items-center gap-3 md:gap-4">
       <button
         onClick={onToggleShuffle}
-        className={`p-1.5 rounded-full transition-all duration-200 ${
+        className={`p-2 md:p-1.5 rounded-full transition-all duration-200 ${
           shuffle ? 'text-hyderabad-cream' : 'text-hyderabad-cream/40 hover:text-hyderabad-cream/70'
         }`}
         aria-label="Shuffle"
         title="Shuffle"
       >
-        <Shuffle size={16} />
+        <Shuffle size={18} />
       </button>
 
       <button
         onClick={onPrev}
         disabled={!hasPrev}
-        className={`p-1.5 rounded-full transition-all duration-200 ${
+        className={`p-2 md:p-1.5 rounded-full transition-all duration-200 ${
           hasPrev ? 'text-hyderabad-cream hover:text-white' : 'text-hyderabad-cream/20 cursor-not-allowed'
         }`}
         aria-label="Previous"
         title="Previous"
       >
-        <SkipBack size={18} fill="currentColor" />
+        <SkipBack size={20} fill="currentColor" />
       </button>
 
       <button
         onClick={onPlayPause}
         disabled={!isPlaying && !hasNext && !hasPrev}
-        className="p-2.5 rounded-full bg-hyderabad-cream text-hyderabad-dark hover:scale-105 active:scale-95 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
+        className="p-3 md:p-2.5 rounded-full bg-hyderabad-cream text-hyderabad-dark hover:scale-105 active:scale-95 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
         aria-label={isPlaying ? 'Pause' : 'Play'}
         title={isPlaying ? 'Pause' : 'Play'}
       >
-        {isPlaying ? <Pause size={20} fill="currentColor" /> : <Play size={20} fill="currentColor" className="ml-0.5" />}
+        {isPlaying ? <Pause size={22} fill="currentColor" /> : <Play size={22} fill="currentColor" className="ml-0.5" />}
       </button>
 
       <button
         onClick={onNext}
         disabled={!hasNext}
-        className={`p-1.5 rounded-full transition-all duration-200 ${
+        className={`p-2 md:p-1.5 rounded-full transition-all duration-200 ${
           hasNext ? 'text-hyderabad-cream hover:text-white' : 'text-hyderabad-cream/20 cursor-not-allowed'
         }`}
         aria-label="Next"
         title="Next"
       >
-        <SkipForward size={18} fill="currentColor" />
+        <SkipForward size={20} fill="currentColor" />
       </button>
 
       <button
         onClick={onToggleRepeat}
-        className={`p-1.5 rounded-full transition-all duration-200 ${
+        className={`p-2 md:p-1.5 rounded-full transition-all duration-200 ${
           repeat !== 'off' ? 'text-hyderabad-cream' : 'text-hyderabad-cream/40 hover:text-hyderabad-cream/70'
         }`}
         aria-label={`Repeat: ${repeat}`}
         title={`Repeat: ${repeat}`}
       >
-        <RepeatIcon size={16} />
+        <RepeatIcon size={18} />
       </button>
 
       <div className="hidden md:flex items-center gap-1.5 ml-1">
